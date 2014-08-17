@@ -12,8 +12,11 @@ USB stick backups
 To backup my USB stick, I tar up its contents and encrypt it with openssl. Then copy the tarball
 to multiple online locations (google drive, my own servers etc).
 
-    tar -cJf - -C /media/vault . | openssl enc -e -aes-256-xts > ~/.vault.tar.xz
+Note that newer versions of `openssl enc` dropped support for XTS ciphers. I therefore switched
+to CBC mode. 
+
+    tar -cJf - -C /media/vault . | openssl enc -e -aes-256-cbc > ~/.vault.tar.xz
 
 In case I lose the USB stick and need to restore its contents:
 
-    cat ~/.vault.tar.xz | openssl enc -d -aes-256-xts | tar -xJf - -C /media/vault
+    cat ~/.vault.tar.xz | openssl enc -d -aes-256-xts | tar -cbc - -C /media/vault
