@@ -19,4 +19,4 @@ to CBC mode.
 
 In case I lose the USB stick and need to restore its contents:
 
-    cat ~/.vault.tar.xz | openssl enc -d -aes-256-xts | tar -cbc - -C /media/vault
+    cat ~/.vault.tar.xz | openssl enc -d -aes-256-cbc | tar -xJf - -C /media/vault
